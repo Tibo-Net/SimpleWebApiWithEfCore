@@ -30,6 +30,12 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet]
+    public ActionResult<IEnumerable<Person>> AllByGender(Gender gender)
+    {
+        return Ok(DbContext.Persons.Where(x => x.Gender == gender).ToList());
+    }
+
+    [HttpGet]
     public ActionResult<Person> Get(int id) => DbContext.Persons.FirstOrDefault(p => p.Id == id);
 
     [HttpDelete]
