@@ -12,11 +12,21 @@ public abstract class Person
 public class Student : Person
 {
     public Year Year { get; set; }
+    public ICollection<Course> CoursesFollowed { get; set; }
 }
 
 public class Teacher : Person
 {
     public Field Field { get; set; }
+    public ICollection<Course> CoursesTaught { get; set; }
+}
+
+public class Course
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public Teacher Teacher { get; set; }
+    public ICollection<Student> Students { get; set; }
 }
 
 public class Date
