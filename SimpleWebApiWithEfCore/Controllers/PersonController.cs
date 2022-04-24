@@ -4,9 +4,23 @@ using SimpleWebApiWithEfCore.Model;
 
 namespace SimpleWebApiWithEfCore.Controllers;
 
+public class StudentController : PersonController<Student>
+{
+    public StudentController(AppDbContext dbContext) : base(dbContext)
+    {
+    }
+}
+
+public class TeacherController : PersonController<Teacher>
+{
+    public TeacherController(AppDbContext dbContext) : base(dbContext)
+    {
+    }
+}
+
 [ApiController]
 [Route("[controller]/[Action]")]
-public class PersonController : ControllerBase
+public abstract class PersonController<TPerson> : ControllerBase where TPerson : Person
 {
     protected AppDbContext DbContext { get; private set; }
 
@@ -16,7 +30,7 @@ public class PersonController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Person> Add(Person person)
+    public ActionResult<Person> Add(TPerson person)
     {
         DbContext.Add(person);
         DbContext.SaveChanges();
@@ -24,29 +38,29 @@ public class PersonController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Person>> All()
+    public ActionResult<IEnumerable<TPerson>> All()
     {
-        return Ok(DbContext.Persons.ToList());
+        return Ok(DbContext.Set<TPerson>().ToList());
     }
 
     [HttpGet]
     public ActionResult<IEnumerable<Person>> AllByGender(Gender gender)
     {
-        return Ok(DbContext.Persons.Where(x => x.Gender == gender).ToList());
+        return Ok(DbContext.Set<TPerson>().Where(x => x.Gender == gender).ToList());
     }
 
     [HttpGet]
-    public ActionResult<Person> Get(int id) => DbContext.Persons.FirstOrDefault(p => p.Id == id);
+    public ActionResult<Person> Get(int id) => DbContext.Set<TPerson>().FirstOrDefault(p => p.Id == id);
 
     [HttpDelete]
     public ActionResult Delete(int id)
     {
-        var person = DbContext.Persons.FirstOrDefault(x => x.Id == id);
+        var person = DbContext.Set<TPerson>().FirstOrDefault(x => x.Id == id);
         if (person == null)
         {
             return NotFound();
         }
-        DbContext.Persons.Remove(person);
+        DbContext.Set<TPerson>().Remove(person);
         DbContext.SaveChanges();
         return Ok();
     }
