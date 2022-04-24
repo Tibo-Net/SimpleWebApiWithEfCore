@@ -6,13 +6,11 @@ namespace SimpleWebApiWithEfCore.DataAccess;
 
 public class AppDbContext : DbContext
 {
-    public DbSet<Person> Persons { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public AppDbContext(DbContextOptions options) : base(options)
     {
-        optionsBuilder.UseSqlServer("Server=(localdb)\\ProjectModels;Database=SimpleWebApiWithEfCore;Trusted_Connection=True;");
-        base.OnConfiguring(optionsBuilder);
     }
+
+    public DbSet<Person> Persons { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -10,9 +10,9 @@ public class PersonController : ControllerBase
 {
     protected AppDbContext DbContext { get; private set; }
 
-    public PersonController()
+    public PersonController(AppDbContext dbContext)
     {
-        DbContext = new AppDbContext();
+        DbContext = dbContext;
     }
 
     [HttpPost]
