@@ -10,5 +10,6 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
     {
         builder.Property(nameof(Person.LastName)).HasMaxLength(100);
         builder.Property(x => x.FirstName).HasMaxLength(100);
+        builder.OwnsOne(x => x.DateOfBirth);
     }
 }
