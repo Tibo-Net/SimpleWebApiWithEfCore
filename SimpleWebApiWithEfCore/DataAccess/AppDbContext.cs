@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SimpleWebApiWithEfCore.DbConfiguration;
 using SimpleWebApiWithEfCore.Model;
 
 namespace SimpleWebApiWithEfCore.DataAccess;
@@ -15,8 +16,7 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Person>().Property<string>(nameof(Person.FirstName)).HasMaxLength(25);
-        modelBuilder.Entity<Person>().Property(x => x.LastName).HasMaxLength(25);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonConfiguration).Assembly);
 
         base.OnModelCreating(modelBuilder);
     }
