@@ -11,8 +11,8 @@ using SimpleWebApiWithEfCore.DataAccess;
 namespace SimpleWebApiWithEfCore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220424135735_SplitPerTypes")]
-    partial class SplitPerTypes
+    [Migration("20220424140648_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
