@@ -16,7 +16,7 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonConfiguration).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonConfiguration<>).Assembly);
 
         base.OnModelCreating(modelBuilder);
     }
